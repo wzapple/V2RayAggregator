@@ -1,0 +1,18 @@
+name: 同步上游仓库
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 每天凌晨3点自动同步
+  workflow_dispatch:        # 保留手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 同步上游到 Fork
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          upstream_sync_repo: mahdibland/V2RayAggregator   # 原作者仓库
+          upstream_sync_branch: master
+          target_sync_branch: master
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}   # 无需额外配置，自动可用
